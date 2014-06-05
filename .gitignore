@@ -1,0 +1,4 @@
+*.sh
+*.swp
+.DS_Store
+target
