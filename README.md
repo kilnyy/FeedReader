@@ -1,5 +1,6 @@
 FeedReader
 ============
+A online rss reader.
 
 Getting Start
 -----------------
