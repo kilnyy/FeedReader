@@ -3,11 +3,16 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.kilnyy.feedreader</groupId>
   <artifactId>feedreader</artifactId>
-  <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <version>1.0</version>
   <name>feedreader</name>
   <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
   <build>
+    <finalName>feedreader</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -47,4 +52,3 @@
     </dependency>
   </dependencies>
 </project>
-
