@@ -10,13 +10,13 @@ To build the webapp, run the following command:
 
     $ mvn package
 
-    To start the release in tomat:
+To start the release in tomat:
 
         $ cp target/feedreader.war path/to/your/tomcat/path
         $ cp target/feedreader-jar-with-dependencies.jar path/to/your/tomcat/jar/path
 
-    Then start tomcat:
+Then start tomcat:
        
         $ catalina
 
-        Then point your browser at [http://localhost:8080/feedreader](http://localhost:8080/feedreader).
+Then point your browser at [http://localhost:8080/feedreader](http://localhost:8080/feedreader).
