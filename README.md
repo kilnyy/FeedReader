@@ -17,6 +17,6 @@ To start the release in tomat:
 
 Then start tomcat:
        
-    $ catalina
+    $ catalina start
 
 Then point your browser at [http://localhost:8080/feedreader](http://localhost:8080/feedreader).
