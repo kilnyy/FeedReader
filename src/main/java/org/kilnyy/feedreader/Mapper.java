@@ -36,7 +36,7 @@ public class Mapper {
         return sites;
     }
 
-    public Site InsertSite(String url) {
+    public Site insertSite(String url) {
         return new Site(url);
     }
 

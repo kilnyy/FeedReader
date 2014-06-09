@@ -16,12 +16,13 @@ public class Adapter {
     public Adapter() {
         String url = "jdbc:mysql://127.0.0.1:3306/FeedReader";
         String user = "root";
-        String password = "";
+        String password = "BabyBibo1117";
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
+            st.executeQuery("SET NAMES utf8");
         } catch (Exception ex) {
             System.err.println("ERROR: " + ex.getMessage());
         }

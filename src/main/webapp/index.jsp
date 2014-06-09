@@ -1,6 +1,12 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ page import="org.kilnyy.feedreader.*" %>
 <%@ page import="java.util.ArrayList" %>
+<% 
+    if (request.getParameter("url") != null) {
+        Mapper.getInstance().insertSite(request.getParameter("url"));
+        response.sendRedirect("./index.jsp");
+    }
+%>
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
@@ -43,7 +49,7 @@ $(function(){
             ArrayList<Site> sites = Mapper.getInstance().getAllSites();
             for (Site site : sites) {
           %>
-            <li><a><%=site.title%></a></li>
+            <li><a><span class="glyphicon glyphicon-fire"></span><%=site.title%></a></li>
           <%
             }
           %>
