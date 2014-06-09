@@ -7,6 +7,7 @@ import org.kilnyy.feedreader.Article;
 import java.util.ArrayList;
 
 import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.feed.synd.SyndEntry;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
@@ -36,8 +37,37 @@ public class Mapper {
         return sites;
     }
 
-    public Site InsertSite(String url) {
-        return new Site(url);
+    public ArrayList<Article> getAllArticles() {
+        ArrayList<Article> articles = new ArrayList<Article>();
+        Adapter adapter = new Adapter();
+        ResultSet rs = adapter.execQuery("SELECT * FROM article");
+        try {
+            while(rs.next()) {
+                articles.add(new Article(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4)));
+            }
+        } catch (final Exception ex) {
+            System.err.println("ERROR: " + ex.getMessage());
+        }
+        return articles;
     }
 
+    public Site InsertSite(String url) {
+        Site site = new Site(url);
+        SyndFeed feed = Fetcher.getInstance().fetchSite(site.url);
+        dealFeed(feed, site, new Timestamp(0));
+        return site;
+    }
+
+    public void dealFeed(SyndFeed feed, Site site, Timestamp lastLoadTime) {
+        ArrayList<SyndEntry> entries = Fetcher.getInstance().getEntrys(feed);
+        for (SyndEntry entry : entries) {
+            if (((Timestamp)entry.getPublishedDate()).after(lastLoadTime)) {
+                new Article(site, entry.getTitle(), entry.getDescription().getValue());
+            }
+        }
+    }
+
+    public static void main(final String[] args) {
+        Mapper.getInstance().InsertSite("http://www.36kr.com/feed");
+    }
 }

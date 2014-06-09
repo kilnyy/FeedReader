@@ -37,6 +37,13 @@ public class Site {
                                       + feed.getTitle() + ","
                                       + _url + "," 
                                       + feed.getPublishedDate() + ")");
+                    rs = adapter.execQuery("SELECT * FROM sites WHERE url = " + _url);
+                    if (rs.next()) {
+                        id = rs.getInt(1);
+                        title = rs.getString(2);
+                        url = _url;
+                        lastLoadTime = rs.getTimestamp(4);
+                    }
                 }
             }
         } catch (final Exception ex) {

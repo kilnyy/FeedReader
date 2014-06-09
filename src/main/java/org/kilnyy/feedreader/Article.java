@@ -11,25 +11,25 @@ import java.sql.Timestamp;
 
 public class Article {
     public Integer id;
-    public Integer site_id;
+    public Integer siteId;
     public String title;
     public String content;
 
-    Article(Integer _id, Integer _site_id, String _title, String _content) {
+    Article(Integer _id, Integer _siteId, String _title, String _content) {
         id = _id;
-        site_id = _site_id;
+        siteId = _siteId;
         title = _title;
         content = _content;
     }
 
     Article(Site site, String _title, String _content) {
-        site_id = site.id;
+        siteId = site.id;
         title = _title;
         content = _content;
         Adapter adapter = new Adapter();
         adapter.execUpdate("INSERT INTO articles VALUES(default, "
-                     + site_id + ","
-                     + title + ","
-                     + content + ")");
+                     + siteId + ",'"
+                     + title + "','"
+                     + content + "')'");
     }
 }
