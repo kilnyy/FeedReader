@@ -67,9 +67,14 @@ $(function(){
           <li><a><span class="glyphicon glyphicon-tags"></span>标签四</a></li> -->
         </ul>
       </div>
-      <div style="top:90%;height:10%;width:20%;padding-top:15px; position:fixed; background-color:#f0f0f0;border-top: solid 1px #ccc">
+      <div style="top:90%;height:10%;width:20%;padding-top:15px; padding-left:20px; position:fixed; background-color:#f0f0f0;border-top: solid 1px #ccc">
         <ul class="nav nav-pills nav-stacked">
-          <li><a><span class="glyphicon glyphicon-plus"></span>添加订阅</a></li>
+          <li>
+            <form method="GET">
+                <a onclick="$(this).hide(); $('#input_url').show();"><span class="glyphicon glyphicon-plus"></span>添加订阅</a>
+                <input type="text" name="url" style="display:none; width: 80%" id="input_url" placeholder="Please input rss url"/>
+            </form>
+        </li>
         </ul>
       </div>
     </div>
