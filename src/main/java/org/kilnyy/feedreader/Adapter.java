@@ -18,7 +18,7 @@ public class Adapter {
     public Adapter() {
         String url = "jdbc:mysql://127.0.0.1:3306/FeedReader";
         String user = "root";
-        String password = "";
+        String password = "BabyBibo1117";
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
