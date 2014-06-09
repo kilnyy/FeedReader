@@ -51,7 +51,7 @@ public class Mapper {
         return articles;
     }
 
-    public Site InsertSite(String url) {
+    public Site insertSite(String url) {
         Site site = new Site(url);
         SyndFeed feed = Fetcher.getInstance().fetchSite(site.url);
         dealFeed(feed, site, new Timestamp(0));
@@ -68,6 +68,6 @@ public class Mapper {
     }
 
     public static void main(final String[] args) {
-        Mapper.getInstance().InsertSite("http://www.36kr.com/feed");
+        Mapper.getInstance().insertSite("http://www.36kr.com/feed");
     }
 }

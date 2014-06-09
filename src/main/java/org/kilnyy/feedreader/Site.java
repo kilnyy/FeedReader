@@ -23,7 +23,7 @@ public class Site {
 
     Site(String _url) {
         Adapter adapter = new Adapter();
-        ResultSet rs = adapter.execQuery("SELECT * FROM sites WHERE url = " + _url);
+        ResultSet rs = adapter.execQuery("SELECT * FROM sites WHERE url = '" + _url + "'");
         try {
             if (rs.next()) {
                 id = rs.getInt(1);
@@ -33,10 +33,10 @@ public class Site {
             } else {
                 SyndFeed feed = Fetcher.getInstance().fetchSite(_url);
                 if (feed != null) {
-                    adapter.execUpdate("INSERT INTO sites VALUES(default, " 
-                                      + feed.getTitle() + ","
-                                      + _url + "," 
-                                      + feed.getPublishedDate() + ")");
+                    adapter.execUpdate("INSERT INTO sites(title, url) VALUES('" 
+                                      + feed.getTitle() + "','"
+                                      + _url + "'" 
+                                      + ")");
                     rs = adapter.execQuery("SELECT * FROM sites WHERE url = " + _url);
                     if (rs.next()) {
                         id = rs.getInt(1);
