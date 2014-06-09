@@ -42,3 +42,7 @@
   float: right;
   margin-right: 5%;
 }
+
+.post-content {
+  padding: 20px 50px;
+}

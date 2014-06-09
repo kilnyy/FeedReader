@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `FeedReader`.`sites` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NULL,
   `url` VARCHAR(255) NULL,
-  `last_load_time` TIMESTAMP NULL,
+  `last_load_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `url_UNIQUE` (`url` ASC))
 ENGINE = InnoDB;
@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `FeedReader`.`articles` (
   `site_id` INT NULL,
   `title` VARCHAR(255) NULL,
   `content` TEXT NULL,
+  `published_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `id_idx` (`site_id` ASC),
   CONSTRAINT `articles_site_id`

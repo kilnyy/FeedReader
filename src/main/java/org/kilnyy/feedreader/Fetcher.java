@@ -11,7 +11,7 @@ import org.rometools.fetcher.impl.HashMapFeedInfoCache;
 import org.rometools.fetcher.impl.HttpURLFeedFetcher;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndContent;
+import java.util.ArrayList;
 
 public class Fetcher {
 
@@ -62,6 +62,14 @@ public class Fetcher {
             System.err.println("ERROR: " + ex.getMessage());
         }
         return null;
+    }
+
+    public ArrayList<SyndEntry> getEntrys(SyndFeed feed) {
+        ArrayList<SyndEntry> res = new ArrayList<SyndEntry>();
+        for ( Object entry : feed.getEntries()) {
+                res.add((SyndEntry)entry);
+        }
+        return res;
     }
 
     public static void main(final String[] args) {

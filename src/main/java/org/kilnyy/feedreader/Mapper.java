@@ -7,6 +7,7 @@ import org.kilnyy.feedreader.Article;
 import java.util.ArrayList;
 
 import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.feed.synd.SyndEntry;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
@@ -36,8 +37,36 @@ public class Mapper {
         return sites;
     }
 
-    public Site insertSite(String url) {
-        return new Site(url);
+    public ArrayList<Article> getAllArticles() {
+        ArrayList<Article> articles = new ArrayList<Article>();
+        Adapter adapter = new Adapter();
+        ResultSet rs = adapter.execQuery("SELECT * FROM articles");
+        try {
+            while(rs.next()) {
+                articles.add(new Article(rs.getInt(1), rs.getInt(2), rs.getString(3), 
+                                         rs.getString(4), rs.getTimestamp(5)));
+            }
+        } catch (final Exception ex) {
+            System.err.println("ERROR: " + ex.getMessage());
+        }
+        return articles;
     }
 
+    public Site insertSite(String url) {
+        Site site = new Site(url);
+        dealFeed(site);
+        return site;
+    }
+
+    public void dealFeed(Site site) {
+        SyndFeed feed = Fetcher.getInstance().fetchSite(site.url);
+        ArrayList<SyndEntry> entries = Fetcher.getInstance().getEntrys(feed);
+        for (SyndEntry entry : entries) {
+            if (site.lastLoadTime.compareTo(entry.getPublishedDate()) == -1) {
+                new Article(site, entry.getTitle(), entry.getDescription().getValue(),
+                            new Timestamp(entry.getPublishedDate().getTime()));
+            }
+        }
+        site.updateLastLoadTime();
+    }
 }
