@@ -43,7 +43,7 @@ $(function(){
             ArrayList<Site> sites = Mapper.getInstance().getAllSites();
             for (Site site : sites) {
           %>
-            <li><a>${site.title}</a></li>
+            <li><a><%=site.title%></a></li>
           <%
             }
           %>

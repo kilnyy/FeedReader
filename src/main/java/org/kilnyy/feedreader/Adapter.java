@@ -19,6 +19,7 @@ public class Adapter {
         String password = "";
 
         try {
+            Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
         } catch (Exception ex) {
