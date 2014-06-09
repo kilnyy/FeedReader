@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `FeedReader`.`articles` (
   `site_id` INT NULL,
   `title` VARCHAR(255) NULL,
   `content` TEXT NULL,
+  `published_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `id_idx` (`site_id` ASC),
   CONSTRAINT `articles_site_id`

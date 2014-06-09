@@ -74,7 +74,6 @@ $(function(){
     <div class="col-md-9" style="width:80%;padding-left:10px;">
       <div style="margin-left:20px">
         <h2>全部</h2>
-      </div>
       <div class="list-group content">
         
         <a class="list-group-item line">
@@ -115,7 +114,7 @@ $(function(){
           <div class="website">网站一</div>
           <div class="title"><%=article.title%></div>
           <div class="preview">這個是學習編程時的…</div>
-          <div class="date">5-28</div>
+          <div class="date"><%=article.publishedDate%></div>
         </a>
         <div class="list-group-item" style="display:none">
           <div class="post-content">
@@ -125,6 +124,7 @@ $(function(){
           <%
             }
           %>
+      </div>
       </div>
 </body>
 </html>

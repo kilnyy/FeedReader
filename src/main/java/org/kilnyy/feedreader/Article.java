@@ -14,22 +14,31 @@ public class Article {
     public Integer siteId;
     public String title;
     public String content;
+    public Timestamp publishedDate;
 
-    Article(Integer _id, Integer _siteId, String _title, String _content) {
+    Article(Integer _id, Integer _siteId, String _title, String _content, Timestamp _publishedDate) {
         id = _id;
         siteId = _siteId;
         title = _title;
         content = _content;
+        publishedDate = _publishedDate;
     }
 
-    Article(Site site, String _title, String _content) {
+    Article(Site site, String _title, String _content, Timestamp _publishedDate) {
         siteId = site.id;
         title = _title;
         content = _content;
-        Adapter adapter = new Adapter();
-        adapter.execUpdate("INSERT INTO articles VALUES(default, "
-                     + siteId + ",'"
-                     + title + "','"
-                     + content + "')'");
+        publishedDate = _publishedDate;
+        try {
+            Adapter adapter = new Adapter();
+            adapter.getPs("INSERT INTO articles(site_id, title, content, publised_date) VALUES(?, ?, ?, ?)");
+            adapter.ps.setInt(1, siteId);
+            adapter.ps.setString(2, title);
+            adapter.ps.setString(3, content);
+            adapter.ps.setTimestamp(4, publishedDate);
+            adapter.execPs();
+        } catch (Exception ex) {
+            System.err.println("ERROR: " + ex.getMessage());
+        }
     }
 }

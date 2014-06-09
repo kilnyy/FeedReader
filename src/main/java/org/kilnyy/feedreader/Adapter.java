@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import com.mysql.jdbc.Driver;
 
 public class Adapter {
@@ -12,11 +13,12 @@ public class Adapter {
     private Connection con;
     private Statement st;
     private ResultSet rs;
+    public PreparedStatement ps;
 
     public Adapter() {
         String url = "jdbc:mysql://127.0.0.1:3306/FeedReader";
         String user = "root";
-        String password = "BabyBibo1117";
+        String password = "";
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -26,6 +28,25 @@ public class Adapter {
         } catch (Exception ex) {
             System.err.println("ERROR: " + ex.getMessage());
         }
+    }
+
+    public PreparedStatement getPs(String sql) {
+        try {
+            ps = con.prepareStatement(sql);
+            return ps;
+        } catch (SQLException ex) {
+            System.err.println("ERROR: " + ex.getMessage());
+        }
+        return null;
+    }
+
+    public int execPs() {
+        try {
+            return ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println("ERROR: " + ex.getMessage());
+        }
+        return -1;
     }
 
     public ResultSet execQuery(String query) {

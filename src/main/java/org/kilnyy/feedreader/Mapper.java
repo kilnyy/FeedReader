@@ -40,10 +40,11 @@ public class Mapper {
     public ArrayList<Article> getAllArticles() {
         ArrayList<Article> articles = new ArrayList<Article>();
         Adapter adapter = new Adapter();
-        ResultSet rs = adapter.execQuery("SELECT * FROM article");
+        ResultSet rs = adapter.execQuery("SELECT * FROM articles");
         try {
             while(rs.next()) {
-                articles.add(new Article(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4)));
+                articles.add(new Article(rs.getInt(1), rs.getInt(2), rs.getString(3), 
+                                         rs.getString(4), rs.getTimestamp(5)));
             }
         } catch (final Exception ex) {
             System.err.println("ERROR: " + ex.getMessage());
@@ -53,21 +54,19 @@ public class Mapper {
 
     public Site insertSite(String url) {
         Site site = new Site(url);
-        SyndFeed feed = Fetcher.getInstance().fetchSite(site.url);
-        dealFeed(feed, site, new Timestamp(0));
+        dealFeed(site);
         return site;
     }
 
-    public void dealFeed(SyndFeed feed, Site site, Timestamp lastLoadTime) {
+    public void dealFeed(Site site) {
+        SyndFeed feed = Fetcher.getInstance().fetchSite(site.url);
         ArrayList<SyndEntry> entries = Fetcher.getInstance().getEntrys(feed);
         for (SyndEntry entry : entries) {
-            if (((Timestamp)entry.getPublishedDate()).after(lastLoadTime)) {
-                new Article(site, entry.getTitle(), entry.getDescription().getValue());
+            if (site.lastLoadTime.compareTo(entry.getPublishedDate()) == -1) {
+                new Article(site, entry.getTitle(), entry.getDescription().getValue(),
+                            new Timestamp(entry.getPublishedDate().getTime()));
             }
         }
-    }
-
-    public static void main(final String[] args) {
-        Mapper.getInstance().insertSite("http://www.36kr.com/feed");
+        site.updateLastLoadTime();
     }
 }

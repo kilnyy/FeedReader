@@ -37,17 +37,22 @@ public class Site {
                                       + feed.getTitle() + "','"
                                       + _url + "'" 
                                       + ")");
-                    rs = adapter.execQuery("SELECT * FROM sites WHERE url = " + _url);
+                    rs = adapter.execQuery("SELECT * FROM sites WHERE url = '" + _url + "'");
                     if (rs.next()) {
                         id = rs.getInt(1);
                         title = rs.getString(2);
                         url = _url;
-                        lastLoadTime = rs.getTimestamp(4);
+                        lastLoadTime = new Timestamp(0);
                     }
                 }
             }
         } catch (final Exception ex) {
             System.err.println("ERROR: " + ex.getMessage());
         }
+    }
+
+    public void updateLastLoadTime() {
+        Adapter adapter = new Adapter();
+        adapter.execUpdate("UPDATE sites SET last_load_time = CURRENT_TIMESTAMP"); 
     }
 }
