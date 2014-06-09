@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `FeedReader`.`sites` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NULL,
   `url` VARCHAR(255) NULL,
-  `last_load_time` TIMESTAMP NULL,
+  `last_load_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `url_UNIQUE` (`url` ASC))
 ENGINE = InnoDB;
