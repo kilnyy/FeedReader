@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
-<script type="text/javascript" async="" src="js/jquery.min.js"></script>
-<script type="text/javascript" async="" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script>
 $(function(){
   $(".content .list-group-item.line").hover(function(){

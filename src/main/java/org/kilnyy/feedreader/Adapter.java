@@ -11,19 +11,9 @@ public class Adapter {
     private static Adapter instance;
     private Connection con;
     private Statement st;
+    private ResultSet rs;
 
-    public static Adapter getInstance() {
-        if (instance == null) {
-            instance = new Adapter();
-            return instance;
-        } else {
-            return instance;
-        }
-    }
-    
     public Adapter() {
-        ResultSet rs = null;
-
         String url = "jdbc:mysql://localhost:3306/FeedReader";
         String user = "root";
         String password = "";
@@ -31,18 +21,18 @@ public class Adapter {
         try {
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
-            rs = st.executeQuery("SELECT VERSION()");
-
-            if (rs.next()) {
-                System.out.println(rs.getString(1));
-            }
-            if (rs != null) {
-                rs.close();
-            }
-
         } catch (SQLException ex) {
             System.err.println("ERROR: " + ex.getMessage());
         }
+    }
+
+    public ResultSet exec(String query) {
+        try {
+            rs = st.executeQuery(query);
+        } catch (SQLException ex) {
+            System.err.println("ERROR: " + ex.getMessage());
+        }
+        return rs;
     }
 
     protected void finalize() {
@@ -52,6 +42,9 @@ public class Adapter {
             }
             if (con != null) {
                 con.close();
+            }
+            if (rs != null) {
+                rs.close();
             }
         } catch (SQLException ex) {
             System.err.println("ERROR: " + ex.getMessage());
