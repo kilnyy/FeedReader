@@ -27,7 +27,7 @@ public class Article {
         title = _title;
         content = _content;
         Adapter adapter = new Adapter();
-        adapter.exec("INSERT INTO articles VALUES(default, "
+        adapter.execUpdate("INSERT INTO articles VALUES(default, "
                      + site_id + ","
                      + title + ","
                      + content + ")");

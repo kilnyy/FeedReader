@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" %>
+<%@ page import="org.kilnyy.feedreader.*" %>
+<%@ page import="java.util.ArrayList" %>
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
@@ -37,7 +39,15 @@ $(function(){
           <li><a><span class="glyphicon glyphicon-inbox"></span>我的收藏</a></li>
           <li><a><span class="glyphicon glyphicon-user"></span>好友订阅</a></li>
           <li><a><span class="glyphicon glyphicon-fire"></span>推荐文章</a></li>
-          <li><a><span class="glyphicon glyphicon-tags"></span>标签一</a></li>
+          <%
+            ArrayList<Site> sites = Mapper.getInstance().getAllSites();
+            for (Site site : sites) {
+          %>
+            <li><a>${site.title}</a></li>
+          <%
+            }
+          %>
+          <!-- <li><a><span class="glyphicon glyphicon-tags"></span>标签一</a></li>
           <li><a><span class="glyphicon glyphicon-tags"></span>标签二</a></li>
           <li><a><span class="glyphicon glyphicon-tags"></span>标签三</a>
             <ul class="nav nav-pills nav-stacked nav2">
@@ -46,7 +56,7 @@ $(function(){
               <li><a>网站三</a></li>
             </ul>
           </li>
-          <li><a><span class="glyphicon glyphicon-tags"></span>标签四</a></li>
+          <li><a><span class="glyphicon glyphicon-tags"></span>标签四</a></li> -->
         </ul>
       </div>
       <div style="top:90%;height:10%;width:20%;padding-top:15px; position:fixed; background-color:#f0f0f0;border-top: solid 1px #ccc">
