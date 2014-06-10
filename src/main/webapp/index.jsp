@@ -91,16 +91,18 @@ $(function(){
                 if (site.id == article.siteId) name = site.title;
             }
       %>
-        <a class="list-group-item line">
+        <div class="list-group-item line">
           <div class="icon" style="opacity:0">
             <span class="glyphicon glyphicon-star-empty"></span>
             <span class="glyphicon glyphicon-thumbs-up"></span>
           </div>
           <div class="website"><%=name%></div>
-          <div class="title"><%=article.title%></div>
-          <div class="preview">這個是學習編程時的…</div>
+          <div class="info">
+          <span class="title"><%=article.title%></span>
+          <!--<span class="preview">這個是學習編程時的…</span>-->
+          </div>
           <div class="date"><%=sdf.format(article.publishedDate)%></div>
-        </a>
+        </div>
         <div class="list-group-item" style="display:none">
           <div class="post-content">
             <%=article.content%>
@@ -113,5 +115,6 @@ $(function(){
       </div>
 </body>
 </html>
+
 
 

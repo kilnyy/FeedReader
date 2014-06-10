@@ -14,35 +14,49 @@
 .content .list-group-item {
   display: block;
   min-height: 50px;
-  font-size: 20px;
+  font-size: 14px;
+}
+
+.content .list-group-item {
+  line-height: 50px;
+  padding: 0px 10px;
 }
 
 .content .icon {
   float: left;
-  margin-left: 3%;
+  margin-left: 0%;
 }
 
 .content .website {
-  width: 12%;
+  width: 16%;
   float: left;
-  margin-left: 3%;
+  margin-left: 1%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.content .info {
+  width: 72%;
+  float: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .content .title {
-  float: left;
+  font-weight: bold;
 }
 
 .content .preview {
-  float: left;
   color: #bbb;
   margin-left: 3%;
 }
 
 .content .date {
-  float: right;
-  margin-right: 5%;
+  float: left;
+  margin-left: 2%;
 }
 
 .post-content {
   padding: 20px 50px;
 }
+
