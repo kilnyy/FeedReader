@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import com.mysql.jdbc.Driver;
+import java.util.Properties;
+import java.io.InputStream;
 
 public class Adapter {
 
@@ -16,11 +18,32 @@ public class Adapter {
     public PreparedStatement ps;
 
     public Adapter() {
-        String url = "jdbc:mysql://127.0.0.1:3306/FeedReader";
-        String user = "root";
-        String password = "BabyBibo1117";
+        Properties props = new Properties(System.getProperties());
+        String defaultResourceName = "database.sample.properties";
+        String resourceName = "database.properties";
+        InputStream in;
+        try {
+            in = this.getClass().getClassLoader().getResourceAsStream(resourceName);
+            if (in == null)
+                in = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);
+            if (in == null)
+                in = Thread.currentThread().getContextClassLoader().getResourceAsStream(defaultResourceName);
+            if (in == null)
+                in = Thread.currentThread().getContextClassLoader().getResourceAsStream(defaultResourceName);
+            if (in != null) {
+                props.load(in);
+                in.close();
+            } else {
+                System.err.println("ERROR: Could not find" + resourceName + " or " + defaultResourceName);
+            }
+        } catch (final Exception ex) {
+            System.err.println("ERROR: " + ex.getMessage());
+        }
 
         try {
+            String url = props.getProperty("database.url");
+            String user = props.getProperty("database.user");
+            String password = props.getProperty("database.password");
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
