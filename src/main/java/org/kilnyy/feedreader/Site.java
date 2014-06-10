@@ -44,15 +44,18 @@ public class Site {
                         url = _url;
                         lastLoadTime = new Timestamp(0);
                     }
+                } else {
+                    id = -1;
                 }
             }
         } catch (final Exception ex) {
+            id = -1;
             System.err.println("ERROR: " + ex.getMessage());
         }
     }
 
     public void updateLastLoadTime() {
         Adapter adapter = new Adapter();
-        adapter.execUpdate("UPDATE sites SET last_load_time = CURRENT_TIMESTAMP"); 
+        adapter.execUpdate("UPDATE sites SET last_load_time = CURRENT_TIMESTAMP Where id = " + id); 
     }
 }

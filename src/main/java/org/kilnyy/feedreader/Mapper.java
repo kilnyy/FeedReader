@@ -37,6 +37,13 @@ public class Mapper {
         return sites;
     }
 
+    public void updateAllSites() {
+        ArrayList<Site> sites = getAllSites();
+        for (Site site : sites) {
+            dealFeed(site);
+        }
+    }
+
     public ArrayList<Article> getAllArticles() {
         ArrayList<Article> articles = new ArrayList<Article>();
         Adapter adapter = new Adapter();
@@ -54,6 +61,9 @@ public class Mapper {
 
     public Site insertSite(String url) {
         Site site = new Site(url);
+        if (site.id == -1) {
+            return null;
+        }
         dealFeed(site);
         return site;
     }
