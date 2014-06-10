@@ -3,3 +3,4 @@
 .DS_Store
 target
 database.properties
+nohup.out
