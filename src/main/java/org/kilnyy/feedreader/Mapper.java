@@ -112,7 +112,7 @@ public class Mapper {
         return site;
     }
 
-    public Site collectionSite(User user, String url) {
+    public Site subscribeSite(User user, String url) {
         Site site = insertSite(url);
         if (site != null) {
             Adapter adapter = new Adapter();
