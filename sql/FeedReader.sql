@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `FeedReader`.`users` (
   `email` VARCHAR(40) NULL,
   `password` VARCHAR(64) NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
 
 
