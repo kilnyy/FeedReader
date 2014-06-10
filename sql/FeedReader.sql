@@ -10,13 +10,10 @@ USE `FeedReader` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `FeedReader`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(40) NULL,
-  `password` VARCHAR(64) NULL,
   `email` VARCHAR(40) NULL,
-  `salt` VARCHAR(64) NULL,
+  `password` VARCHAR(64) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB;
 
 

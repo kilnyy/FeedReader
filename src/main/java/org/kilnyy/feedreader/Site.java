@@ -33,10 +33,11 @@ public class Site {
             } else {
                 SyndFeed feed = Fetcher.getInstance().fetchSite(_url);
                 if (feed != null) {
-                    adapter.execUpdate("INSERT INTO sites(title, url) VALUES('" 
-                                      + feed.getTitle() + "','"
-                                      + _url + "'" 
-                                      + ")");
+                    adapter = new Adapter();
+                    adapter.getPs("INSERT INTO sites(title, url) VALUES(?, ?)");
+                    adapter.ps.setString(1, feed.getTitle());
+                    adapter.ps.setString(2, _url);
+                    adapter.execPs();
                     rs = adapter.execQuery("SELECT * FROM sites WHERE url = '" + _url + "'");
                     if (rs.next()) {
                         id = rs.getInt(1);

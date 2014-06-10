@@ -4,9 +4,18 @@
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <% 
-    if (request.getParameter("url") != null) {
-        Mapper.getInstance().insertSite(request.getParameter("url"));
-        response.sendRedirect("./index.jsp");
+    Integer id = (Integer)session.getAttribute("user_id");
+    String msg = request.getParameter("msg");
+    User user;
+    if (id == null) {
+        response.sendRedirect("./login.jsp");
+        return;
+    } else {
+        user = Mapper.getInstance().getUser(id);
+        if (user == null) {
+            response.sendRedirect("./login.jsp");
+            return;
+        }
     }
 %>
 <html lang="zh-cn">
@@ -36,7 +45,7 @@ $(function(){
     <ul class="nav navbar-nav pull-right">
       <li><a href="#"><span class="glyphicon glyphicon-check"></span>全部标记为已读</a></li>
       <li><a href="#"><span class="glyphicon glyphicon-wrench"></span>设置</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-log-out"></span>登出</a></li>
+      <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span>登出</a></li>
     </ul>
 </nav>
   <div class="row" style="margin-top:45px">
@@ -48,7 +57,7 @@ $(function(){
           <li><a><span class="glyphicon glyphicon-user"></span>好友订阅</a></li>
           <li><a><span class="glyphicon glyphicon-fire"></span>推荐文章</a></li>
           <%
-            ArrayList<Site> sites = Mapper.getInstance().getAllSites();
+            ArrayList<Site> sites = Mapper.getInstance().getAllSites(user);
             for (Site site : sites) {
           %>
             <li><a><span class="glyphicon glyphicon-fire"></span><%=site.title%></a></li>
@@ -70,7 +79,7 @@ $(function(){
       <div style="top:90%;height:10%;width:20%;padding-top:15px; padding-left:20px; position:fixed; background-color:#f0f0f0;border-top: solid 1px #ccc">
         <ul class="nav nav-pills nav-stacked">
           <li>
-            <form method="GET">
+            <form method="GET" action="subscribe.jsp">
                 <a onclick="$(this).hide(); $('#input_url').show();"><span class="glyphicon glyphicon-plus"></span>添加订阅</a>
                 <input type="text" name="url" style="display:none; width: 80%" id="input_url" placeholder="Please input rss url"/>
             </form>
@@ -83,7 +92,7 @@ $(function(){
         <h2>全部</h2>
       <div class="list-group content">
       <%
-        ArrayList<Article> articles = Mapper.getInstance().getAllArticles();
+        ArrayList<Article> articles = Mapper.getInstance().getAllArticles(user);
             DateFormat sdf = new SimpleDateFormat("MMM dd");
         for (Article article : articles) {
             String name = "";
