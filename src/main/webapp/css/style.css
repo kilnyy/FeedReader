@@ -15,11 +15,15 @@
   display: block;
   min-height: 50px;
   font-size: 14px;
-}
-
-.content .list-group-item {
   line-height: 50px;
   padding: 0px 10px;
+  margin-bottom: 0px;
+  border-bottom: solid 1px #ddd;
+  border-top: none;
+}
+
+.content .list-group-item:first-child{
+  border-top: solid 1px #ddd;
 }
 
 .content .icon {
@@ -59,4 +63,3 @@
 .post-content {
   padding: 20px 50px;
 }
-

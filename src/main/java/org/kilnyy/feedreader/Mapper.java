@@ -40,7 +40,7 @@ public class Mapper {
     public ArrayList<Article> getAllArticles() {
         ArrayList<Article> articles = new ArrayList<Article>();
         Adapter adapter = new Adapter();
-        ResultSet rs = adapter.execQuery("SELECT * FROM articles");
+        ResultSet rs = adapter.execQuery("SELECT * FROM articles ORDER BY published_date desc LIMIT 50");
         try {
             while(rs.next()) {
                 articles.add(new Article(rs.getInt(1), rs.getInt(2), rs.getString(3), 
