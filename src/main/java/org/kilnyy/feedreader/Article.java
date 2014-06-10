@@ -31,7 +31,7 @@ public class Article {
         publishedDate = _publishedDate;
         try {
             Adapter adapter = new Adapter();
-            adapter.getPs("INSERT INTO articles(site_id, title, content, publised_date) VALUES(?, ?, ?, ?)");
+            adapter.getPs("INSERT INTO articles(site_id, title, content, published_date) VALUES(?, ?, ?, ?)");
             adapter.ps.setInt(1, siteId);
             adapter.ps.setString(2, title);
             adapter.ps.setString(3, content);
