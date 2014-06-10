@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <% 
     session.invalidate();
-    response.sendRedirect("./login.jsp");
+    response.sendRedirect("./login.jsp?msg=Logout%20succeed");
 %>

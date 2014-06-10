@@ -18,7 +18,11 @@
         }
     }
     if (request.getParameter("url") != null) {
-        Mapper.getInstance().subscribeSite(user, request.getParameter("url"));
-        response.sendRedirect("./index.jsp");
+        Site site = Mapper.getInstance().subscribeSite(user, request.getParameter("url"));
+        if (site != null) {
+            response.sendRedirect("./index.jsp?msg=Subscribe%20succeed");
+        } else {
+            response.sendRedirect("./index.jsp?msg=Subscribe%20failed&alert=danger");
+        }
     }
 %>

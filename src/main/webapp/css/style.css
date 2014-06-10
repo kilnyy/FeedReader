@@ -63,3 +63,57 @@
 .post-content {
   padding: 20px 50px;
 }
+
+.form-group input{
+	width: 100%;
+	border: 2px solid #dcdcdc;
+	border-radius: 2px;
+}
+
+.form-group label{
+  font-size: 14px;
+}
+
+/*alert*/
+
+.alert {
+  background-color: #5ac499;
+  color: white;
+  width: 100%;
+  padding: 14px 40px;
+  font-size: 14px;
+  margin: 0px;
+}
+
+.alert a.close {
+  text-decoration: none;
+  color: #1e1e1e;
+  font-size: 24px;
+  margin-top: -24px;
+  opacity: 0.5;
+  text-shadow: none;
+  font-weight: bold;
+}
+
+.alert a.close:hover, .alert a.close:focus, .alert a.close:active {
+  opacity: 0.8;
+}
+
+.alert-success {
+  background-color: #5ac499;
+  border-color: #5ac499;
+  background-image: none;
+  box-shadow: none;
+}
+
+.alert-danger {
+  background-color: #f07979;
+  border-color: #f07979;
+  background-image: none;
+  box-shadow: none;
+}
+
+.flash p {
+  margin: 0px;
+}
+

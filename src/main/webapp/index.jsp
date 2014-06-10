@@ -5,7 +5,6 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <% 
     Integer id = (Integer)session.getAttribute("user_id");
-    String msg = request.getParameter("msg");
     User user;
     if (id == null) {
         response.sendRedirect("./login.jsp");
@@ -88,6 +87,7 @@ $(function(){
       </div>
     </div>
     <div class="col-md-9" style="width:80%;padding-left:10px;">
+    <%@ include file="flash.jsp" %>
       <div style="margin-left:20px">
         <h2>全部</h2>
       <div class="list-group content">
