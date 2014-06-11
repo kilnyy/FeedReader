@@ -114,7 +114,7 @@ $(function(){
             for (Site site : sites) {
                 if (site.id == article.siteId) name = site.title;
             }
-            for (Article sa : startedArticles) {
+            for (Article sa : staredArticles) {
                 if (sa.id.equals(article.id)) {
                     star = "";
                 }
@@ -127,7 +127,7 @@ $(function(){
       %>
         <div class="list-group-item line" articleId="<%=article.id%>">
           <div class="icon" style="opacity:0">
-            <span class="glyphicon glyphicon-star<%=star=>"></span>
+            <span class="glyphicon glyphicon-star<%=star%>"></span>
           </div>
           <div class="website"><%=name%></div>
           <div class="info">
@@ -148,3 +148,4 @@ $(function(){
       </div>
 </body>
 </html>
+
