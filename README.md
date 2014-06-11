@@ -13,7 +13,10 @@ To build the webapp, run the following command:
 To start the release in tomat:
 
     $ cp target/feedreader.war path/to/your/tomcat/path
-    $ cp target/feedreader-jar-with-dependencies.jar path/to/your/tomcat/jar/path
+    
+To run article updating program in foreground:
+
+    $ java -cp target/feedreader-jar-with-dependencies.jar org.kilnyy.feedreader.Runner 600000
 
 Then start tomcat:
        
