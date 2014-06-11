@@ -126,7 +126,7 @@ $(function(){
                 }
             }
       %>
-        <div class="list-group-item line" articleId="<%=article.id%>">
+        <div class="row list-group-item line" articleId="<%=article.id%>">
           <div class="icon" style="opacity:0">
             <a href="javascript:void(0)"><span class="glyphicon glyphicon-star<%=star%>" articleId="<%=article.id%>"></span></a>
           </div>
