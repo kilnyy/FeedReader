@@ -46,7 +46,7 @@
   white-space: nowrap;
 }
 
-.content .title {
+.content .title.not-read {
   font-weight: bold;
 }
 
@@ -116,4 +116,5 @@
 .flash p {
   margin: 0px;
 }
+
 

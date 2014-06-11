@@ -39,6 +39,11 @@ $(function(){
   });
   $(".content .list-group-item.line").click(function(){
     $(this).next().slideToggle(200, "");
+    var articleId = $(this).attr("articleId");
+    if ($(this).find(".title").hasClass("not-read")){
+        $(this).find(".title").removeClass("not-read");
+        $.get("./action.jsp?action=read&article_id=" + articleId);
+    }
   });
 })
 </script>
@@ -98,22 +103,35 @@ $(function(){
         <h2><%=(curSite==null)?"全部":curSite.title%></h2>
       <div class="list-group content">
       <%
+        ArrayList<Article> readedArticles = Mapper.getInstance().getActedArticles(user, "read");
+        ArrayList<Article> staredArticles = Mapper.getInstance().getActedArticles(user, "star");
         ArrayList<Article> articles = siteId == 0 ? Mapper.getInstance().getAllArticles(user) : Mapper.getInstance().getAllArticles(siteId);
             DateFormat sdf = new SimpleDateFormat("MMM dd");
         for (Article article : articles) {
             String name = "";
+            String notRead = "not-read";
+            String star = "-empty";
             for (Site site : sites) {
                 if (site.id == article.siteId) name = site.title;
             }
+            for (Article sa : startedArticles) {
+                if (sa.id.equals(article.id)) {
+                    star = "";
+                }
+            }
+            for (Article ra : readedArticles) {
+                if (ra.id.equals(article.id)) {
+                    notRead = "";
+                }
+            }
       %>
-        <div class="list-group-item line">
+        <div class="list-group-item line" articleId="<%=article.id%>">
           <div class="icon" style="opacity:0">
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-thumbs-up"></span>
+            <span class="glyphicon glyphicon-star<%=star=>"></span>
           </div>
           <div class="website"><%=name%></div>
           <div class="info">
-          <span class="title"><%=article.title%></span>
+          <span class="title <%=notRead%>"><%=article.title%></span>
           <!--<span class="preview">這個是學習編程時的…</span>-->
           </div>
           <div class="date"><%=sdf.format(article.publishedDate)%></div>
@@ -130,6 +148,3 @@ $(function(){
       </div>
 </body>
 </html>
-
-
-
