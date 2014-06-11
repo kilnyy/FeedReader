@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.net.URL" %>
 <% 
     Integer id = (Integer)session.getAttribute("user_id");
     User user;
