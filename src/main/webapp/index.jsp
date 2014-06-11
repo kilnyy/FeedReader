@@ -17,6 +17,7 @@
         }
     }
     Integer siteId = Integer.parseInt((request.getParameter("site_id")==null)?"0":request.getParameter("site_id"));
+    String type = request.getParameter("type");
     Site curSite = null;
     if (siteId != 0) {
         curSite = new Site(siteId);
@@ -34,14 +35,16 @@
 $(function(){
   $(".content .list-group-item.line").hover(function(){
     $(this).children(".icon").animate({ opacity: 1 },100);
+    $(this).css("background-color", "#f5f5f5");
   },function(){
     $(this).children(".icon").animate({ opacity: 0 },100);
+    $(this).css("background-color", "#FFF");
   });
-  $(".content .list-group-item.line").click(function(){
-    $(this).next().slideToggle(200, "");
-    var articleId = $(this).attr("articleId");
-    if ($(this).find(".title").hasClass("not-read")){
-        $(this).find(".title").removeClass("not-read");
+  $(".content .list-group-item.line :not(a)").click(function(){
+    $(this).parent().next().slideToggle(200, "");
+    var articleId = $(this).parent().attr("articleId");
+    if ($(this).parent().find(".title").hasClass("not-read")){
+        $(this).parent().find(".title").removeClass("not-read");
         $.get("./action.jsp?action=read&article_id=" + articleId);
     }
   });
@@ -72,9 +75,7 @@ $(function(){
       <div style="height:90%;width:20%;padding-top:15px; position:fixed; background-color:#f0f0f0">
         <ul class="nav nav-pills nav-stacked">
           <li class="<%=siteId==0?"active":""%>"><a href="./"><span class="glyphicon glyphicon-th-list"></span>全部</a></li>
-          <li><a><span class="glyphicon glyphicon-inbox"></span>我的收藏</a></li>
-          <li><a><span class="glyphicon glyphicon-user"></span>好友订阅</a></li>
-          <li><a><span class="glyphicon glyphicon-fire"></span>推荐文章</a></li>
+          <li class="<%=type=="star"?"active":""%>"><a href="./?type=star"><span class="glyphicon glyphicon-inbox"></span>我的收藏</a></li>
           <%
             ArrayList<Site> sites = Mapper.getInstance().getAllSites(user);
             for (Site site : sites) {
@@ -83,16 +84,6 @@ $(function(){
           <%
             }
           %>
-          <!-- <li><a><span class="glyphicon glyphicon-tags"></span>标签一</a></li>
-          <li><a><span class="glyphicon glyphicon-tags"></span>标签二</a></li>
-          <li><a><span class="glyphicon glyphicon-tags"></span>标签三</a>
-            <ul class="nav nav-pills nav-stacked nav2">
-              <li><a>网站一</a></li>
-              <li><a>网站二</a></li>
-              <li><a>网站三</a></li>
-            </ul>
-          </li>
-          <li><a><span class="glyphicon glyphicon-tags"></span>标签四</a></li> -->
         </ul>
       </div>
       <div style="top:90%;height:10%;width:20%;padding-top:15px; padding-left:20px; position:fixed; background-color:#f0f0f0;border-top: solid 1px #ccc">
@@ -109,12 +100,12 @@ $(function(){
     <div class="col-md-9" style="width:80%;padding-left:10px;">
     <%@ include file="flash.jsp" %>
       <div style="margin-left:20px">
-        <h2><%=(curSite==null)?"全部":curSite.title%></h2>
+        <h2><%=(curSite==null)?(type.equals("star")?"我的收藏":"全部"):curSite.title%></h2>
       <div class="list-group content">
       <%
         ArrayList<Article> readedArticles = Mapper.getInstance().getActedArticles(user, "read");
         ArrayList<Article> staredArticles = Mapper.getInstance().getActedArticles(user, "star");
-        ArrayList<Article> articles = siteId == 0 ? Mapper.getInstance().getAllArticles(user) : Mapper.getInstance().getAllArticles(siteId);
+        ArrayList<Article> articles = siteId == 0 ? (type.equals("star") ? Mapper.getInstance().getActedArticles(user, "star") : Mapper.getInstance().getAllArticles(user)) : Mapper.getInstance().getAllArticles(siteId);
             DateFormat sdf = new SimpleDateFormat("MMM dd");
         for (Article article : articles) {
             String name = "";
