@@ -45,6 +45,15 @@ $(function(){
         $.get("./action.jsp?action=read&article_id=" + articleId);
     }
   });
+  $(".content .list-group-item.line .glyphicon-star-empty").click(function(){
+    $(this).next().slideToggle(200, "");
+    var articleId = $(this).attr("articleId");
+    if ($(this).hasClass("glyphicon-star-empty")){
+        $(this).removeClass("glyphicon-star-empty");
+        $(this).addClass("glyphicon-star");
+        $.get("./action.jsp?action=star&article_id=" + articleId);
+    }
+  });
 })
 </script>
 </head>
@@ -127,7 +136,7 @@ $(function(){
       %>
         <div class="list-group-item line" articleId="<%=article.id%>">
           <div class="icon" style="opacity:0">
-            <span class="glyphicon glyphicon-star<%=star%>"></span>
+            <a href="javascript:void(0)"><span class="glyphicon glyphicon-star<%=star%>" articleId="<%=article.id%>"></span></a>
           </div>
           <div class="website"><%=name%></div>
           <div class="info">
@@ -148,4 +157,5 @@ $(function(){
       </div>
 </body>
 </html>
+
 
