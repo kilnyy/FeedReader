@@ -2,6 +2,8 @@
 <%@ page import="org.kilnyy.feedreader.*" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.DateFormat" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.net.URL" %>
 <% 
@@ -42,7 +44,7 @@ $(function(){
     $(this).children(".icon").animate({ opacity: 0 },100);
     $(this).css("background-color", "#FFF");
   });
-  $(".content .list-group-item.line :not(a)").click(function(){
+  $(".content .list-group-item.line .info, .content .list-group-item.line .website, .content .list-group-item.line .date").click(function(){
     $(this).parent().next().slideToggle(200, "");
     var articleId = $(this).parent().attr("articleId");
     if ($(this).parent().find(".title").hasClass("not-read")){
@@ -67,7 +69,6 @@ $(function(){
 <a href="#" class="navbar-brand">FeedReader</a>
 <div class="navbar-collapse collapse navbar-responsive-collapse">
     <ul class="nav navbar-nav pull-right">
-      <li><a href="#"><span class="glyphicon glyphicon-check"></span>全部标记为已读</a></li>
       <li><a href="#"><span class="glyphicon glyphicon-wrench"></span>设置</a></li>
       <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span>登出</a></li>
     </ul>
@@ -76,13 +77,15 @@ $(function(){
     <div class="col-md-3" style="width:20%;">
       <div style="height:90%;width:20%;padding-top:15px; position:fixed; background-color:#f0f0f0">
         <ul class="nav nav-pills nav-stacked">
-          <li class="<%=siteId==0?"active":""%>"><a href="./"><span class="glyphicon glyphicon-th-list"></span>全部</a></li>
-          <li class="<%=type=="star"?"active":""%>"><a href="./?type=star"><span class="glyphicon glyphicon-inbox"></span>我的收藏</a></li>
+          <li class="<%=siteId==0&&!type.equals("star")?"active":""%>"><a href="./"><span class="glyphicon glyphicon-th-list"></span>全部</a></li>
+          <li class="<%=type.equals("star")?"active":""%>"><a href="./?type=star"><span class="glyphicon glyphicon-inbox"></span>我的收藏</a></li>
           <%
             ArrayList<Site> sites = Mapper.getInstance().getAllSites(user);
             for (Site site : sites) {
+                URL url = new URL(site.url);
+                String icon = url.getProtocol() + "://" + url.getHost() + "/favicon.ico";
           %>
-            <li class="<%=siteId==site.id?"active":""%>"><a href="./?site_id=<%=site.id%>"><span class="glyphicon glyphicon-fire"></span><%=site.title%></a></li>
+            <li class="<%=siteId==site.id?"active":""%>"><a href="./?site_id=<%=site.id%>"><img style="margin-right:10px;height:15px" src="<%=icon%>"></img><%=site.title%></a></li>
           <%
             }
           %>
@@ -109,6 +112,8 @@ $(function(){
         ArrayList<Article> staredArticles = Mapper.getInstance().getActedArticles(user, "star");
         ArrayList<Article> articles = siteId == 0 ? (type.equals("star") ? Mapper.getInstance().getActedArticles(user, "star") : Mapper.getInstance().getAllArticles(user)) : Mapper.getInstance().getAllArticles(siteId);
             DateFormat sdf = new SimpleDateFormat("MMM dd");
+            DateFormat sdf2 = new SimpleDateFormat("HH:mm");
+            String today = sdf.format(new Timestamp((new Date()).getTime()));
         for (Article article : articles) {
             String name = "";
             String notRead = "not-read";
@@ -136,7 +141,7 @@ $(function(){
           <span class="title <%=notRead%>"><%=article.title%></span>
           <!--<span class="preview">這個是學習編程時的…</span>-->
           </div>
-          <div class="date"><%=sdf.format(article.publishedDate)%></div>
+          <div class="date"><%=sdf.format(article.publishedDate).equals(today) ? sdf2.format(article.publishedDate) : today%></div>
         </div>
         <div class="list-group-item" style="display:none">
           <div class="post-content">
@@ -150,5 +155,4 @@ $(function(){
       </div>
 </body>
 </html>
-
 
