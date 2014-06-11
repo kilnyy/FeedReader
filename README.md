@@ -6,6 +6,10 @@ Getting Start
 -----------------
 To run this webapp, you need `maven` and `tomcat`.
 
+First you need to import sql/FeedReader.sql to your MySQL database.
+
+Then create src/main/resources/database.properties to setting database config.
+
 To build the webapp, run the following command:
 
     $ mvn package
