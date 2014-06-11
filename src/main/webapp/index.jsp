@@ -145,6 +145,11 @@ $(function(){
         </div>
         <div class="list-group-item" style="display:none">
           <div class="post-content">
+          <div class="info">
+            <h3 class="title <%=notRead%>"><%=article.title%></h3>
+          <span class="title <%=notRead%>"><%=name%></span> ·
+          <span class="date"><%=sdf.format(article.publishedDate).equals(today) ? sdf2.format(article.publishedDate) : today%></span>
+          </div>
             <%=article.content%>
           </div>
         </div>

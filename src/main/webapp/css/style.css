@@ -11,7 +11,7 @@
   margin-right: 10px;
 }
 
-.content .list-group-item {
+.content .list-group-item.line {
   display: block;
   min-height: 50px;
   font-size: 14px;
@@ -22,17 +22,33 @@
   border-top: none;
 }
 
+.content .list-group-item {
+  display: block;
+  font-size: 14px;
+  padding: 0px 10px;
+  margin-bottom: 0px;
+  border-bottom: solid 1px #ddd;
+  border-top: none;
+}
+
+.content .list-group-item.line {
+  cursor: pointer;
+}
+
 .content .list-group-item:first-child{
   border-top: solid 1px #ddd;
 }
 
-.content .icon {
+.content .list-group-item.line .icon {
   float: left;
   margin-left: 0%;
   margin-top: 17px;
 }
+.content .icon a {
+  color: #222222;
+}
 
-.content .website {
+.content .list-group-item.line .website {
   width: 16%;
   float: left;
   margin-left: 1%;
@@ -40,29 +56,39 @@
   overflow: hidden;
 }
 
-.content .info {
+.content .list-group-item.line .info {
   width: 72%;
   float: left;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.content .title.not-read {
+.post-content{
+  width: 70%;
+  margin: 0px auto;
+}
+
+.content .list-group-item.line .title.not-read {
   font-weight: bold;
 }
 
-.content .preview {
+.content .list-group-item.line .preview {
   color: #bbb;
   margin-left: 3%;
 }
 
-.content .date {
+.content .list-group-item.line .date {
   float: left;
   margin-left: 2%;
 }
 
 .post-content {
   padding: 20px 50px;
+}
+
+.post-content img {
+  display: block;
+  max-width: 100%;
 }
 
 .form-group input{
@@ -117,5 +143,6 @@
 .flash p {
   margin: 0px;
 }
+
 
 
