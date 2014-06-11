@@ -5,7 +5,6 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <% 
     Integer id = (Integer)session.getAttribute("user_id");
-    String msg = request.getParameter("msg");
     User user;
     if (id == null) {
         response.sendRedirect("./login.jsp");

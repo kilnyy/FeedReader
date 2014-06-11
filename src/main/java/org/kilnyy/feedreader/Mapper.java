@@ -63,6 +63,15 @@ public class Mapper {
         return getAllSites(rs);
     }
 
+    public ArrayList<Site> getHotSites() {
+        Adapter adapter = new Adapter();
+        ResultSet rs = adapter.execQuery("SELECT sites.id, sites.title, url, last_load_time FROM sites"
+                                         + " JOIN rel_users_subscribe_sites ON (sites.id = site_id)"
+                                         + " GROUP BY sites.id"
+                                         + " ORDER BY count(*) LIMIT 10");
+        return getAllSites(rs);
+    }
+
     public void updateAllSites() {
         ArrayList<Site> sites = getAllSites();
         for (Site site : sites) {
@@ -83,6 +92,16 @@ public class Mapper {
         return articles;
     }
 
+    public ArrayList<Article> getAllArticles(Integer siteId) {
+        Adapter adapter = new Adapter();
+        ResultSet rs = adapter.execQuery("SELECT articles.id, articles.site_id, articles.title, "
+                                         + " content, published_date"
+                                         + " FROM articles" 
+                                         + " WHERE site_id = " + siteId
+                                         + " ORDER BY published_date desc LIMIT 50");
+        return getAllArticles(rs);
+    }
+
     public ArrayList<Article> getAllArticles(User user) {
         if (user == null) return new ArrayList<Article>();
         Adapter adapter = new Adapter();
@@ -93,6 +112,21 @@ public class Mapper {
                                          + " JOIN rel_users_subscribe_sites r ON (sites.id = r.site_id)"
                                          + " WHERE user_id = " + user.id
                                          + " ORDER BY published_date desc LIMIT 50");
+        return getAllArticles(rs);
+    }
+
+    public ArrayList<Article> getActedArticles(User user, String action) {
+        if (user == null) return new ArrayList<Article>();
+        Adapter adapter = new Adapter();
+        if (!action.equals("read") && !action.equals("star") && !action.equals("like")) {
+            return new ArrayList<Article>();
+        }
+        ResultSet rs = adapter.execQuery("SELECT articles.id, articles.site_id, articles.title, "
+                                         + " content, published_date"
+                                         + " FROM articles" 
+                                         + " JOIN rel_users_"+action+"_articles r ON (articles.id = r.article_id)"
+                                         + " WHERE user_id = " + user.id
+                                         + " ORDER BY published_date desc");
         return getAllArticles(rs);
     }
 
@@ -128,20 +162,23 @@ public class Mapper {
         return site;
     }
 
-    public Site Site(User user, String url) {
-        Site site = insertSite(url);
-        if (site != null) {
+    public Article actArticle(User user, Integer id, String action) {
+        if (!action.equals("read") && !action.equals("star") && !action.equals("like")) {
+            return null;
+        }
+        Article article = new Article(id);
+        if (article != null && article.id != -1) {
             Adapter adapter = new Adapter();
             try {
-                adapter.getPs("INSERT INTO rel_users_subscribe_sites VALUES(?, ?)");
+                adapter.getPs("INSERT INTO rel_users_"+action+"_articles VALUES(?, ?)");
                 adapter.ps.setInt(1, user.id);
-                adapter.ps.setInt(2, site.id);
+                adapter.ps.setInt(2, article.id);
                 adapter.execPs();
             } catch (final Exception ex) {
                 System.err.println("ERROR: " + ex.getMessage());
             }
         }
-        return site;
+        return article;
     }
 
     public void dealFeed(Site site) {

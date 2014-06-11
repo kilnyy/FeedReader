@@ -16,6 +16,12 @@
             return;
         }
     }
+    Integer siteId = Integer.parseInt((request.getParameter("site_id")==null)?"0":request.getParameter("site_id"));
+    Site curSite = null;
+    if (siteId != 0) {
+        curSite = new Site(siteId);
+        if (curSite.id == -1) curSite = null;
+    }
 %>
 <html lang="zh-cn">
 <head>
@@ -51,7 +57,7 @@ $(function(){
     <div class="col-md-3" style="width:20%;">
       <div style="height:90%;width:20%;padding-top:15px; position:fixed; background-color:#f0f0f0">
         <ul class="nav nav-pills nav-stacked">
-          <li class="active"><a><span class="glyphicon glyphicon-th-list"></span>全部</a></li>
+          <li class="<%=siteId==0?"active":""%>"><a href="./"><span class="glyphicon glyphicon-th-list"></span>全部</a></li>
           <li><a><span class="glyphicon glyphicon-inbox"></span>我的收藏</a></li>
           <li><a><span class="glyphicon glyphicon-user"></span>好友订阅</a></li>
           <li><a><span class="glyphicon glyphicon-fire"></span>推荐文章</a></li>
@@ -59,7 +65,7 @@ $(function(){
             ArrayList<Site> sites = Mapper.getInstance().getAllSites(user);
             for (Site site : sites) {
           %>
-            <li><a><span class="glyphicon glyphicon-fire"></span><%=site.title%></a></li>
+            <li class="<%=siteId==site.id?"active":""%>"><a href="./?site_id=<%=site.id%>"><span class="glyphicon glyphicon-fire"></span><%=site.title%></a></li>
           <%
             }
           %>
@@ -89,10 +95,10 @@ $(function(){
     <div class="col-md-9" style="width:80%;padding-left:10px;">
     <%@ include file="flash.jsp" %>
       <div style="margin-left:20px">
-        <h2>全部</h2>
+        <h2><%=(curSite==null)?"全部":curSite.title%></h2>
       <div class="list-group content">
       <%
-        ArrayList<Article> articles = Mapper.getInstance().getAllArticles(user);
+        ArrayList<Article> articles = siteId == 0 ? Mapper.getInstance().getAllArticles(user) : Mapper.getInstance().getAllArticles(siteId);
             DateFormat sdf = new SimpleDateFormat("MMM dd");
         for (Article article : articles) {
             String name = "";

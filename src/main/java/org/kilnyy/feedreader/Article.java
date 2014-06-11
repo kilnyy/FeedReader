@@ -16,6 +16,25 @@ public class Article {
     public String content;
     public Timestamp publishedDate;
 
+    Article(Integer _id) {
+        Adapter adapter = new Adapter();
+        try {
+            ResultSet rs = adapter.execQuery("SELECT * FROM articles WHERE id=" + _id);
+            if (rs.next()) {
+                id = rs.getInt(1);   
+                siteId = rs.getInt(2);
+                title = rs.getString(3);
+                content = rs.getString(4);
+                publishedDate = rs.getTimestamp(5);
+            } else {
+                id = -1;
+            }
+        } catch (Exception ex) {
+            id = -1;
+            System.err.println("ERROR: " + ex.getMessage());
+        }
+    }
+
     Article(Integer _id, Integer _siteId, String _title, String _content, Timestamp _publishedDate) {
         id = _id;
         siteId = _siteId;

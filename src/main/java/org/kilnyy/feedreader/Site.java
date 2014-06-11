@@ -14,6 +14,24 @@ public class Site {
     public String url;
     public Timestamp lastLoadTime;
 
+    public Site(Integer _id) {
+        Adapter adapter = new Adapter();
+        try {
+            ResultSet rs = adapter.execQuery("SELECT * FROM sites WHERE id=" + _id);
+            if (rs.next()) {
+                id = rs.getInt(1);   
+                title = rs.getString(2);
+                url = rs.getString(3);
+                lastLoadTime = rs.getTimestamp(4);
+            } else {
+                id = -1;
+            }
+        } catch (Exception ex) {
+            id = -1;
+            System.err.println("ERROR: " + ex.getMessage());
+        }
+    }
+
     Site(Integer _id, String _title, String _url, Timestamp _lastLoadTime) {
         id = _id;
         title = _title;
