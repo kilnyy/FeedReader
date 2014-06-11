@@ -18,6 +18,7 @@
     }
     Integer siteId = Integer.parseInt((request.getParameter("site_id")==null)?"0":request.getParameter("site_id"));
     String type = request.getParameter("type");
+    if (type == null) type = "";
     Site curSite = null;
     if (siteId != 0) {
         curSite = new Site(siteId);
