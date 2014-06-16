@@ -184,11 +184,15 @@ public class Mapper {
     public void dealFeed(Site site) {
         SyndFeed feed = Fetcher.getInstance().fetchSite(site.url);
         ArrayList<SyndEntry> entries = Fetcher.getInstance().getEntrys(feed);
-        for (SyndEntry entry : entries) {
-            if (site.lastLoadTime.compareTo(entry.getPublishedDate()) == -1) {
-                new Article(site, entry.getTitle(), entry.getDescription().getValue(),
-                            new Timestamp(entry.getPublishedDate().getTime()));
+        try {
+            for (SyndEntry entry : entries) {
+                if (site.lastLoadTime.compareTo(entry.getPublishedDate()) == -1) {
+                    new Article(site, entry.getTitle(), entry.getDescription().getValue(),
+                                new Timestamp(entry.getPublishedDate().getTime()));
+                }
             }
+        } catch (final Exception ex) {
+            System.err.println("ERROR: " + ex.getMessage());
         }
         site.updateLastLoadTime();
     }
