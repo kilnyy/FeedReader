@@ -21,7 +21,10 @@
     }
     Integer siteId = Integer.parseInt((request.getParameter("site_id")==null)?"0":request.getParameter("site_id"));
     String type = request.getParameter("type");
+    String mod = (String)session.getAttribute("mod");
     if (type == null) type = "";
+    if (mod == null) mod = "";
+    String currentUrl = request.getRequestURI()+"?type="+type;
     Site curSite = null;
     if (siteId != 0) {
         curSite = new Site(siteId);
@@ -69,7 +72,22 @@ $(function(){
 <a href="#" class="navbar-brand">FeedReader</a>
 <div class="navbar-collapse collapse navbar-responsive-collapse">
     <ul class="nav navbar-nav pull-right">
-      <li><a href="#"><span class="glyphicon glyphicon-wrench"></span>设置</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>设置</a>
+        <ul class="dropdown-menu">
+          <%
+            if (mod.equals("unread")) {
+          %>
+          <li><a href="mod.jsp?next=<%=currentUrl%>">全部显示</a></li>
+          <%
+            } else {
+          %>
+          <li><a href="mod.jsp?next=<%=currentUrl%>">只看未读</a></li>
+          <%
+            }
+          %>
+        </ul>
+      </li>
       <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span>登出</a></li>
     </ul>
 </nav>
@@ -131,6 +149,7 @@ $(function(){
                     notRead = "";
                 }
             }
+            if (mod.equals("unread") && notRead.equals("")) continue;
       %>
         <div class="row list-group-item line" articleId="<%=article.id%>">
           <div class="icon" style="opacity:0">
@@ -141,14 +160,14 @@ $(function(){
           <span class="title <%=notRead%>"><%=article.title%></span>
           <!--<span class="preview">這個是學習編程時的…</span>-->
           </div>
-          <div class="date"><%=sdf.format(article.publishedDate).equals(today) ? sdf2.format(article.publishedDate) : today%></div>
+          <div class="date"><%=sdf.format(article.publishedDate).equals(today) ? sdf2.format(article.publishedDate) : sdf.format(article.publishedDate) %></div>
         </div>
         <div class="list-group-item" style="display:none">
           <div class="post-content">
           <div class="info">
             <h3 class="title <%=notRead%>"><%=article.title%></h3>
           <span class="title <%=notRead%>"><%=name%></span> ·
-          <span class="date"><%=sdf.format(article.publishedDate).equals(today) ? sdf2.format(article.publishedDate) : today%></span>
+          <span class="date"><%=sdf.format(article.publishedDate).equals(today) ? sdf2.format(article.publishedDate) : sdf.format(article.publishedDate) %></span>
           </div>
             <%=article.content%>
           </div>
@@ -160,4 +179,3 @@ $(function(){
       </div>
 </body>
 </html>
-
