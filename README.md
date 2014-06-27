@@ -2,6 +2,18 @@ FeedReader
 ============
 A online rss reader.
 
+Github repo link: https://github.com/kilnyy/FeedReader
+
+Please go to http://reader.ourbears.cn:8080/feedreader/login.jsp to try it out
+
+Hier
+-----------------
+/src FeedReader Source Code
+
+/sql Database script
+
+/doc Final project report
+
 Getting Start
 -----------------
 To run this webapp, you need `maven` and `tomcat`.
