@@ -3,7 +3,6 @@ package org.kilnyy.feedreader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import com.mysql.jdbc.Driver;
@@ -57,7 +56,7 @@ public class Adapter {
         try {
             ps = con.prepareStatement(sql);
             return ps;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.err.println("ERROR: " + ex.getMessage());
         }
         return null;
@@ -66,7 +65,7 @@ public class Adapter {
     public int execPs() {
         try {
             return ps.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.err.println("ERROR: " + ex.getMessage());
         }
         return -1;
@@ -79,7 +78,7 @@ public class Adapter {
                 st = con.createStatement();
             }
             rs = st.executeQuery(query);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.err.println("ERROR: " + ex.getMessage());
         }
         return rs;
@@ -89,7 +88,7 @@ public class Adapter {
         Integer res = -1;
         try {
             res = st.executeUpdate(query);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.err.println("ERROR: " + ex.getMessage());
         }
         return res;
@@ -106,7 +105,7 @@ public class Adapter {
             if (rs != null) {
                 rs.close();
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.err.println("ERROR: " + ex.getMessage());
         }
     }
