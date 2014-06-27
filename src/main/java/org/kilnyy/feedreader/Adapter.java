@@ -75,6 +75,9 @@ public class Adapter {
     public ResultSet execQuery(String query) {
         rs = null;
         try {
+            if (st == null) {
+                st = con.createStatement();
+            }
             rs = st.executeQuery(query);
         } catch (SQLException ex) {
             System.err.println("ERROR: " + ex.getMessage());
