@@ -44,6 +44,7 @@
   Password</label>
   <input id="user_password" name="password" size="30" type="password" />
 </div>
+<p class="text-muted" style="font-size:12px"><span class="glyphicon glyphicon-info-sign"></span>  直接使用新邮箱登陆的同时，我们会自动为您新注册账号。</p>
 <input class="btn btn-block btn-success" type="submit" value="登录" />
 </form>
 </div>
