@@ -4,7 +4,7 @@ A online rss reader.
 
 Github repo link: https://github.com/kilnyy/FeedReader
 
-Please go to http://reader.ourbears.cn:8080/feedreader/login.jsp to try it out
+Please go to http://reader.xumingzhao.com to try it out
 
 Hier
 -----------------
