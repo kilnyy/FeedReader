@@ -34,6 +34,7 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
+<title>FeedReader</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery.min.js"></script>
