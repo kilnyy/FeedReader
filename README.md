@@ -28,7 +28,7 @@ To build the webapp, run the following command:
 
 To start the release in tomat:
 
-    $ cp target/feedreader.war path/to/your/tomcat/path
+    $ cp target/feedreader.war path/to/your/tomcat/webapps
     
 To run article updating program in foreground:
 
