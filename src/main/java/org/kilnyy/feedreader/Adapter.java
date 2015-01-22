@@ -44,7 +44,7 @@ public class Adapter {
             String user = props.getProperty("database.user");
             String password = props.getProperty("database.password");
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, user, password);
+            con = DriverManager.getConnection(url + "?useUnicode=true&characterEncoding=UTF-8", user, password);
             st = con.createStatement();
             st.executeQuery("SET NAMES utf8");
         } catch (Exception ex) {
